@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Vector</title>
+  <style>
+    #ex {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <h3>Example 1.1: Bouncing ball with no vectors</h3>
+  <button onclick="start(draw);">시작</button>
+  <button onclick="stop();">정지</button>
+  <br>
+
+  <script src="Canvas.js"></script>
+  <script src="Ball.js"></script>
+  <script>
+    let canvas = new Canvas();
+    let ball = new Ball(canvas.getContext());
+
+    let x = 100;
+    let y = 100;
+    let xspeed = 1;
+    let yspeed = 3.3;
+
+    function init() {
+      setup();
+    }
+
+    function setup() {
+      canvas.size(800, 400);
+      canvas.style({
+        border: "1px solid black"
+      });
+    }
+
+    function draw() {
+      x = x + xspeed;
+      y = y + yspeed;
+      if ((x > canvas.width) || (x < 0)) {
+        xspeed = xspeed * -1;
+      }
+      if ((y > canvas.height) || (y < 0)) {
+        yspeed = yspeed * -1;
+      }
+      canvas.clear();
+      ball.fill();
+      ball.stroke();
+      ball.update(x, y, 16);
+    }
+
+    init();
+
+
+    let animate = null;
+
+    function start(callback) {
+      animate = setInterval(callback, 10);
+    }
+
+    function stop() {
+      clearInterval(animate);
+    }
+  </script>
+</body>
+
+</html>
