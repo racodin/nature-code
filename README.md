@@ -1,7 +1,7 @@
 # THE NATURE OF CODE
 
-## Canvas
+> Canvas
 
-## Ball
+> Ball
 
-## Vector
+> Vector

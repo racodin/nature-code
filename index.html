@@ -21,39 +21,45 @@
 
   <script src="Canvas.js"></script>
   <script src="Ball.js"></script>
-  <script>
-    let canvas = new Canvas();
-    let ball = new Ball(canvas.getContext());
+  <script src="Vector.js"></script>
 
-    let x = 100;
-    let y = 100;
-    let xspeed = 1;
-    let yspeed = 3.3;
+  <script>
+    let canvas
+    let ball;
+    let position;
+    let velocity;
 
     function init() {
       setup();
     }
 
     function setup() {
+      canvas = new Canvas();
+      ball = new Ball();
       canvas.size(800, 400);
       canvas.style({
         border: "1px solid black"
       });
+      canvas.add(ball);
+
+      position = new Vector(canvas.width / 2, canvas.height / 2);
+      velocity = new Vector(2.5, 5);
     }
 
     function draw() {
-      x = x + xspeed;
-      y = y + yspeed;
-      if ((x > canvas.width) || (x < 0)) {
-        xspeed = xspeed * -1;
-      }
-      if ((y > canvas.height) || (y < 0)) {
-        yspeed = yspeed * -1;
-      }
       canvas.clear();
+
+      position.add(velocity);
+      if ((position.x + ball.radius > canvas.width) || (position.x - ball.radius < 0)) {
+        velocity.x = velocity.x * -1;
+      }
+      if ((position.y + ball.radius > canvas.height) || (position.y - ball.radius < 0)) {
+        velocity.y = velocity.y * -1;
+      }
+
       ball.fill();
       ball.stroke();
-      ball.update(x, y, 16);
+      ball.update(position.x, position.y, 16);
     }
 
     init();
@@ -62,7 +68,7 @@
     let animate = null;
 
     function start(callback) {
-      animate = setInterval(callback, 10);
+      animate = setInterval(callback, 24);
     }
 
     function stop() {

@@ -11,6 +11,10 @@ class Canvas {
     }
   }
 
+  add(instance) {
+    instance.ctx = this.ctx;
+  }
+
   size(width, height) {
     this.width = this.canvas.width = width;
     this.height = this.canvas.height = height;
@@ -24,9 +28,5 @@ class Canvas {
     for (const value in object) {
       this.canvas.style[value] = object[value];
     }
-  }
-
-  getContext() {
-    return this.ctx;
   }
 }
