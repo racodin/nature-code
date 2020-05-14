@@ -1,8 +1,21 @@
+/**
+ * @class Canvas
+ */
 class Canvas {
-  constructor(target) {
+  /**
+   * @constructor
+   * @param {Number} width 
+   * @param {Number} height 
+   * @param {Element} target 
+   */
+  constructor(width, height, target) {
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext("2d");
-    this.canvas.id = "canvas";
+
+    let i = 0;
+    while (document.getElementById(`canvas${i}`)) i++;
+    this.canvas.id = `canvas${i}`;
+    this.size(width, height);
 
     if (!target) {
       document.getElementsByTagName("body")[0].appendChild(this.canvas);

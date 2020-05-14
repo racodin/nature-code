@@ -1,4 +1,13 @@
+/**
+ * @class Ball
+ */
 class Ball {
+  /**
+   * @constructor
+   * @param {Number} x 
+   * @param {Number} y 
+   * @param {Number} r 
+   */
   constructor(x, y, r) {
     this.x = x || 0;
     this.y = y || 0;

@@ -14,67 +14,125 @@
 </head>
 
 <body>
-  <h3>Example 1.1: Bouncing ball with no vectors</h3>
-  <button onclick="start(draw);">시작</button>
-  <button onclick="stop();">정지</button>
-  <br>
-
   <script src="Canvas.js"></script>
   <script src="Ball.js"></script>
   <script src="Vector.js"></script>
 
+  <h3>Example 1.1: Bouncing 1 with no vectors</h3>
+
   <script>
-    let canvas
-    let ball;
-    let position;
-    let velocity;
+    (function () {
 
-    function init() {
-      setup();
-    }
+      let canvas
+      let ball;
 
-    function setup() {
-      canvas = new Canvas();
-      ball = new Ball();
-      canvas.size(800, 400);
-      canvas.style({
-        border: "1px solid black"
-      });
-      canvas.add(ball);
+      let x = 250;
+      let y = 150;
+      let xspeed = 2.5;
+      let yspeed = 5;
 
-      position = new Vector(canvas.width / 2, canvas.height / 2);
-      velocity = new Vector(2.5, 5);
-    }
-
-    function draw() {
-      canvas.clear();
-
-      position.add(velocity);
-      if ((position.x + ball.radius > canvas.width) || (position.x - ball.radius < 0)) {
-        velocity.x = velocity.x * -1;
-      }
-      if ((position.y + ball.radius > canvas.height) || (position.y - ball.radius < 0)) {
-        velocity.y = velocity.y * -1;
+      function init() {
+        setup();
       }
 
-      ball.fill();
-      ball.stroke();
-      ball.update(position.x, position.y, 16);
-    }
+      function setup() {
+        ball = new Ball();
+        canvas = new Canvas(500, 300);
+        canvas.style({
+          border: "1px solid black"
+        });
+        canvas.add(ball);
+      }
 
-    init();
+      function draw() {
+        canvas.clear();
 
+        x = x + xspeed;
+        y = y + yspeed;
 
-    let animate = null;
+        if ((x + ball.radius > canvas.width) || (x - ball.radius < 0)) {
+          xspeed = xspeed * -1;
+        }
+        if ((y + ball.radius > canvas.height) || (y - ball.radius < 0)) {
+          yspeed = yspeed * -1;
 
-    function start(callback) {
-      animate = setInterval(callback, 24);
-    }
+        }
+        ball.fill();
+        ball.stroke();
+        ball.update(x, y, 16);
+      }
 
-    function stop() {
-      clearInterval(animate);
-    }
+      init();
+
+      let animate = {
+        start(fn, speed) {
+          this.requestId = setInterval(fn, speed);
+        },
+        stop() {
+          clearInterval(this.requestId);
+        }
+      }
+      animate.start(draw, 18);
+    })();
   </script>
+
+  <h3>Example 1.2: Bouncing ball with PVectors!</h3>
+
+  <script>
+    (function () {
+
+      let canvas
+      let ball;
+      let position;
+      let velocity;
+
+      function init() {
+        setup();
+      }
+
+      function setup() {
+        ball = new Ball();
+        canvas = new Canvas(500, 300);
+        canvas.style({
+          border: "1px solid black"
+        });
+        canvas.add(ball);
+
+        position = new Vector(250, 150);
+        console.log(canvas.width);
+        velocity = new Vector(2.5, 5);
+      }
+
+      function draw() {
+        canvas.clear();
+
+        position.add(velocity);
+        if ((position.x + ball.radius > canvas.width) || (position.x - ball.radius < 0)) {
+          velocity.x = velocity.x * -1;
+        }
+        if ((position.y + ball.radius > canvas.height) || (position.y - ball.radius < 0)) {
+          velocity.y = velocity.y * -1;
+        }
+
+        ball.fill();
+        ball.stroke();
+        ball.update(position.x, position.y, 16);
+      }
+
+      init();
+
+      let animate = {
+        start(fn, speed) {
+          this.requestId = setInterval(fn, speed);
+        },
+        stop() {
+          clearInterval(this.requestId);
+        }
+      }
+      animate.start(draw, 18);
+    })();
+  </script>
+
 </body>
 
 </html>
